@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AZ Group — Premium Roblox Store | Robux, Game Passes & More" },
+      { title: "AZ Group - Premium Roblox Store | Robux, Game Passes & More" },
       {
         name: "description",
         content:
           "AZ Group is the trusted Roblox store for instant Robux, game passes, limited items and accounts. Unbeatable prices, fast delivery, secure WhatsApp confirmation.",
       },
       { name: "author", content: "AZ Group" },
-      { property: "og:title", content: "AZ Group — Premium Roblox Store" },
+      { property: "og:title", content: "AZ Group - Premium Roblox Store | Robux, Game Passes & More" },
       {
         property: "og:description",
         content:
@@ -95,6 +95,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "AZ Group - Premium Roblox Store | Robux, Game Passes & More" },
+      { name: "description", content: "AZ Group is the trusted Roblox store for instant Robux, game passes, limited items and accounts. Unbeatable prices, fast delivery, secure WhatsApp confirmation." },
+      { property: "og:description", content: "AZ Group is the trusted Roblox store for instant Robux, game passes, limited items and accounts. Unbeatable prices, fast delivery, secure WhatsApp confirmation." },
+      { name: "twitter:description", content: "AZ Group is the trusted Roblox store for instant Robux, game passes, limited items and accounts. Unbeatable prices, fast delivery, secure WhatsApp confirmation." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/684c83da-5d17-41a0-9381-6b71b3caf79f/id-preview-d4fcc62b--0ac72013-7d84-45b5-815a-a0cbd32eebc9.lovable.app-1783412688832.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/684c83da-5d17-41a0-9381-6b71b3caf79f/id-preview-d4fcc62b--0ac72013-7d84-45b5-815a-a0cbd32eebc9.lovable.app-1783412688832.png" },
     ],
     links: [
       {
