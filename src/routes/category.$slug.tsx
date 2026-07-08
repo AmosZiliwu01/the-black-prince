@@ -15,17 +15,17 @@ function CategoryPage() {
   const { data: settings } = useQuery(settingsQuery());
   const { data: categories } = useQuery(categoriesQuery());
   const { data: products, isLoading } = useQuery(productsQuery({ categorySlug: slug }));
-  const symbol = settings?.general.currency_symbol ?? "$";
+  const symbol = settings?.general.currency_symbol ?? "Rp";
   const category = categories?.find((c) => c.slug === slug);
 
   return (
     <StoreLayout>
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
         <Link to="/shop" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> All products
+          <ArrowLeft className="h-4 w-4" /> Semua produk
         </Link>
         <h1 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
-          {category?.name ?? "Category"}
+          {category?.name ?? "Kategori"}
         </h1>
         {category?.description && <p className="mt-2 text-muted-foreground">{category.description}</p>}
 
@@ -44,7 +44,7 @@ function CategoryPage() {
             </div>
           ) : (
             <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
-              No products in this category yet.
+              Belum ada produk di kategori ini.
             </div>
           )}
         </div>

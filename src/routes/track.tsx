@@ -16,8 +16,8 @@ export const Route = createFileRoute("/track")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Track Your Order — AZ Group" },
-      { name: "description", content: "Check the status of your AZ Group order using your order number." },
+      { title: "Lacak Pesanan — AZ Group" },
+      { name: "description", content: "Cek status pesanan AZ Group kamu menggunakan nomor pesanan." },
     ],
   }),
   component: TrackPage,
@@ -56,8 +56,8 @@ function TrackPage() {
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
         <div className="text-center">
           <PackageSearch className="mx-auto h-12 w-12 text-primary" />
-          <h1 className="mt-3 font-display text-3xl font-bold">Track Your Order</h1>
-          <p className="mt-2 text-muted-foreground">Enter your order number to see its status.</p>
+          <h1 className="mt-3 font-display text-3xl font-bold">Lacak Pesanan Kamu</h1>
+          <p className="mt-2 text-muted-foreground">Masukkan nomor pesanan untuk melihat statusnya.</p>
         </div>
 
         <form
@@ -72,18 +72,18 @@ function TrackPage() {
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g. AZ-XXXXXX"
+              placeholder="cth. AZ-XXXXXX"
               className="pl-9"
             />
           </div>
           <Button type="submit" variant="gradient" disabled={loading}>
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Track"}
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Lacak"}
           </Button>
         </form>
 
         {searched && !loading && result && !result.found && (
           <div className="mt-8 rounded-xl border border-dashed border-border p-10 text-center text-muted-foreground">
-            No order found with that number. Double-check and try again.
+            Pesanan dengan nomor tersebut tidak ditemukan. Periksa kembali dan coba lagi.
           </div>
         )}
 
@@ -91,7 +91,7 @@ function TrackPage() {
           <div className="mt-8 rounded-xl border border-border bg-card p-6 shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <p className="text-sm text-muted-foreground">Order</p>
+                <p className="text-sm text-muted-foreground">Pesanan</p>
                 <p className="font-display text-xl font-bold text-primary">{result.order.order_number}</p>
               </div>
               <Badge
@@ -136,7 +136,7 @@ function TrackPage() {
 
             <div className="mt-6 grid gap-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Customer</span>
+                <span className="text-muted-foreground">Pelanggan</span>
                 <span>{result.order.customer_name}</span>
               </div>
               <div className="flex justify-between">
@@ -144,13 +144,13 @@ function TrackPage() {
                 <span>{result.order.roblox_username}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Placed</span>
+                <span className="text-muted-foreground">Dipesan</span>
                 <span>{formatDate(result.order.created_at)}</span>
               </div>
             </div>
 
             <div className="mt-4 border-t border-border pt-4">
-              <p className="mb-2 text-sm font-semibold">Items</p>
+              <p className="mb-2 text-sm font-semibold">Item</p>
               <div className="space-y-1.5">
                 {result.items.map((it, i) => (
                   <div key={i} className="flex justify-between text-sm">

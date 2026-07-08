@@ -15,6 +15,12 @@ export const Route = createFileRoute("/product/$slug")({
   component: ProductPage,
 });
 
+const PRODUCT_TYPE_LABELS: Record<string, string> = {
+  fruit: "Buah",
+  account: "Akun",
+  joki: "Joki",
+};
+
 function ProductPage() {
   const { slug } = Route.useParams();
   const navigate = useNavigate();
@@ -22,7 +28,7 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const { data: settings } = useQuery(settingsQuery());
   const { data: product, isLoading } = useQuery(productQuery(slug));
-  const symbol = settings?.general.currency_symbol ?? "$";
+  const symbol = settings?.general.currency_symbol ?? "Rp";
 
   if (isLoading) {
     return (
@@ -43,10 +49,10 @@ function ProductPage() {
     return (
       <StoreLayout>
         <div className="mx-auto max-w-2xl px-4 py-24 text-center">
-          <h1 className="font-display text-2xl font-bold">Product not found</h1>
-          <p className="mt-2 text-muted-foreground">This product may have been removed.</p>
+          <h1 className="font-display text-2xl font-bold">Produk tidak ditemukan</h1>
+          <p className="mt-2 text-muted-foreground">Produk ini mungkin sudah dihapus.</p>
           <Button asChild variant="gradient" className="mt-6">
-            <Link to="/shop">Back to shop</Link>
+            <Link to="/shop">Kembali ke Toko</Link>
           </Button>
         </div>
       </StoreLayout>
@@ -66,7 +72,7 @@ function ProductPage() {
       },
       qty,
     );
-    toast.success(`${product.name} added to cart`);
+    toast.success(`${product.name} ditambahkan ke keranjang`);
     if (goCart) navigate({ to: "/cart" });
   };
 
@@ -74,7 +80,7 @@ function ProductPage() {
     <StoreLayout>
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <Link to="/shop" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> Back to shop
+          <ArrowLeft className="h-4 w-4" /> Kembali ke toko
         </Link>
 
         <div className="mt-6 grid gap-8 md:grid-cols-2">
@@ -91,22 +97,46 @@ function ProductPage() {
           <div>
             <div className="flex flex-wrap gap-2">
               {product.categories?.name && <Badge variant="secondary">{product.categories.name}</Badge>}
-              {product.is_featured && <Badge variant="accent">Featured</Badge>}
-              {soldOut ? <Badge variant="destructive">Sold Out</Badge> : <Badge variant="success">In Stock</Badge>}
+              <Badge variant="outline">{PRODUCT_TYPE_LABELS[product.product_type] ?? product.product_type}</Badge>
+              <Badge variant="outline">{product.game_name}</Badge>
+              {product.is_featured && <Badge variant="accent">Unggulan</Badge>}
+              {soldOut ? <Badge variant="destructive">Habis</Badge> : <Badge variant="success">Tersedia</Badge>}
             </div>
             <h1 className="mt-3 font-display text-3xl font-bold">{product.name}</h1>
 
+            {product.sold_count > 0 && (
+              <p className="mt-1 text-sm text-muted-foreground">Sudah terjual {product.sold_count}x</p>
+            )}
+
             <div className="mt-3 flex items-center gap-3">
               <span className="text-3xl font-bold">{formatCurrency(product.price, symbol)}</span>
-              {product.compare_at_price && Number(product.compare_at_price) > Number(product.price) && (
+              {product.original_price && Number(product.original_price) > Number(product.price) && (
                 <span className="text-lg text-muted-foreground line-through">
-                  {formatCurrency(product.compare_at_price, symbol)}
+                  {formatCurrency(product.original_price, symbol)}
                 </span>
               )}
             </div>
 
             {product.description && (
               <p className="mt-4 whitespace-pre-line text-muted-foreground">{product.description}</p>
+            )}
+
+            {product.features && product.features.length > 0 && (
+              <ul className="mt-4 space-y-1.5 text-sm">
+                {product.features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {product.rarity && (
+              <p className="mt-3 text-sm text-muted-foreground">Rarity: <span className="font-medium text-foreground">{product.rarity}</span></p>
+            )}
+            {product.duration && (
+              <p className="mt-1 text-sm text-muted-foreground">Estimasi durasi: <span className="font-medium text-foreground">{product.duration}</span></p>
             )}
 
             {product.delivery_info && (
@@ -123,19 +153,24 @@ function ProductPage() {
                     <Minus className="h-4 w-4" />
                   </button>
                   <span className="w-10 text-center font-semibold">{qty}</span>
-                  <button className="p-2.5 hover:text-primary" onClick={() => setQty((q) => q + 1)}>
+                  <button
+                    className="p-2.5 hover:text-primary disabled:opacity-30 disabled:hover:text-inherit"
+                    onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
+                    disabled={qty >= product.stock}
+                  >
                     <Plus className="h-4 w-4" />
                   </button>
                 </div>
+                <span className="text-sm text-muted-foreground">Stok tersedia: {product.stock}</span>
               </div>
             )}
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Button onClick={() => add(false)} disabled={soldOut} variant="outline" size="lg">
-                <ShoppingCart className="h-4 w-4" /> Add to Cart
+                <ShoppingCart className="h-4 w-4" /> Tambah ke Keranjang
               </Button>
               <Button onClick={() => add(true)} disabled={soldOut} variant="gradient" size="lg">
-                Buy Now
+                Beli Sekarang
               </Button>
             </div>
           </div>

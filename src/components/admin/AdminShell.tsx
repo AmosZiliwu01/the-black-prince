@@ -10,6 +10,9 @@ import {
   LogOut,
   Loader2,
   ExternalLink,
+  Users,
+  Star,
+  HelpCircle,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/context/auth";
@@ -18,11 +21,14 @@ import { cn } from "@/lib/utils";
 
 const nav = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
-  { to: "/admin/products", label: "Products", icon: Package },
-  { to: "/admin/categories", label: "Categories", icon: FolderTree },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
-  { to: "/admin/activity", label: "Activity Log", icon: ScrollText },
+  { to: "/admin/orders", label: "Pesanan", icon: ShoppingBag },
+  { to: "/admin/products", label: "Produk", icon: Package },
+  { to: "/admin/categories", label: "Kategori", icon: FolderTree },
+  { to: "/admin/groups", label: "Join Grup", icon: Users },
+  { to: "/admin/testimonials", label: "Testimoni", icon: Star },
+  { to: "/admin/faqs", label: "FAQ", icon: HelpCircle },
+  { to: "/admin/settings", label: "Pengaturan", icon: Settings },
+  { to: "/admin/activity", label: "Log Aktivitas", icon: ScrollText },
 ];
 
 export function AdminShell({ children, title }: { children: ReactNode; title: string }) {

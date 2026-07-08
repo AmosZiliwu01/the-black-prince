@@ -31,12 +31,20 @@ export const placeOrder = createServerFn({ method: "POST" })
     const ids = data.items.map((i) => i.product_id);
     const { data: products, error: prodErr } = await supabaseAdmin
       .from("products")
-      .select("id, name, price, is_active")
+      .select("id, name, price, is_active, stock")
       .in("id", ids);
 
     if (prodErr) throw new Error("Could not verify products");
     const active = (products ?? []).filter((p) => p.is_active);
     if (active.length === 0) throw new Error("No valid products in cart");
+
+    // Validasi stok di server — sumber kebenaran terakhir, tidak bisa dilewati dari client.
+    for (const item of data.items) {
+      const p = active.find((x) => x.id === item.product_id);
+      if (p && item.quantity > p.stock) {
+        throw new Error(`Stok "${p.name}" tidak mencukupi. Tersisa ${p.stock}.`);
+      }
+    }
 
     let subtotal = 0;
     const lineItems = data.items
@@ -69,6 +77,7 @@ export const placeOrder = createServerFn({ method: "POST" })
         customer_email: data.customer_email || null,
         payment_method: data.payment_method,
         payment_proof_url: data.payment_proof_url || null,
+        proof_submitted_on_web: !!data.payment_proof_url,
         customer_note: data.customer_note || null,
         status: data.payment_proof_url ? "awaiting_verification" : "pending",
         subtotal,
@@ -84,6 +93,14 @@ export const placeOrder = createServerFn({ method: "POST" })
       .insert(lineItems.map((li) => ({ ...li, order_id: order.id })));
 
     if (itemsErr) throw new Error("Could not save order items");
+
+    // Kurangi stok sesuai jumlah yang dipesan.
+    for (const item of lineItems) {
+      const p = active.find((x) => x.id === item.product_id);
+      if (!p) continue;
+      const newStock = Math.max(0, p.stock - item.quantity);
+      await supabaseAdmin.from("products").update({ stock: newStock }).eq("id", item.product_id);
+    }
 
     return { order_number: order.order_number, total: subtotal };
   });
@@ -114,4 +131,3 @@ export const trackOrder = createServerFn({ method: "GET" })
     const { id: _id, ...publicOrder } = order;
     return { found: true as const, order: publicOrder, items: items ?? [] };
   });
-

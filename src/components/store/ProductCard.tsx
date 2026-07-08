@@ -11,7 +11,7 @@ export interface StoreProduct {
   name: string;
   slug: string;
   price: number;
-  compare_at_price: number | null;
+  original_price: number | null;
   image_url: string | null;
   stock: number;
   is_featured: boolean;
@@ -67,15 +67,15 @@ export function ProductCard({ product, symbol = "$" }: { product: StoreProduct; 
         </Link>
         <div className="mt-2 flex items-center gap-2">
           <span className="text-lg font-bold">{formatCurrency(product.price, symbol)}</span>
-          {product.compare_at_price && Number(product.compare_at_price) > Number(product.price) && (
+          {product.original_price && Number(product.original_price) > Number(product.price) && (
             <span className="text-sm text-muted-foreground line-through">
-              {formatCurrency(product.compare_at_price, symbol)}
+              {formatCurrency(product.original_price, symbol)}
             </span>
           )}
         </div>
         <div className="mt-4 flex-1" />
         <Button onClick={add} disabled={soldOut} variant="gradient" className="w-full">
-          <ShoppingCart className="h-4 w-4" /> {soldOut ? "Sold Out" : "Add to Cart"}
+          <ShoppingCart className="h-4 w-4" /> {soldOut ? "Sold Out" : "Tambah ke Keranjang"}
         </Button>
       </div>
     </div>

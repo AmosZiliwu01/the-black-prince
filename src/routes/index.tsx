@@ -13,16 +13,16 @@ export const Route = createFileRoute("/")({
 });
 
 const perks = [
-  { icon: Zap, title: "Instant Delivery", desc: "Most orders delivered within minutes." },
-  { icon: ShieldCheck, title: "Secure & Trusted", desc: "Safe checkout with WhatsApp confirmation." },
-  { icon: Headset, title: "24/7 Support", desc: "Real humans ready to help you anytime." },
+  { icon: Zap, title: "Pengiriman Instan", desc: "Sebagian besar pesanan dikirim dalam hitungan menit." },
+  { icon: ShieldCheck, title: "Aman & Terpercaya", desc: "Checkout aman dengan konfirmasi via WhatsApp." },
+  { icon: Headset, title: "Dukungan 24/7", desc: "Tim kami siap membantu kapan saja." },
 ];
 
 function Index() {
   const { data: settings } = useQuery(settingsQuery());
   const { data: categories } = useQuery(categoriesQuery());
   const { data: featured, isLoading } = useQuery(productsQuery({ featured: true }));
-  const symbol = settings?.general.currency_symbol ?? "$";
+  const symbol = settings?.general.currency_symbol ?? "Rp";
   const hero = settings?.hero;
 
   return (
@@ -40,23 +40,23 @@ function Index() {
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> {settings?.general.tagline ?? "Premium Roblox Store"}
+              <Sparkles className="h-3.5 w-3.5" /> {settings?.general.tagline ?? "Toko Roblox Premium"}
             </span>
             <h1 className="mt-5 font-display text-4xl font-bold leading-tight sm:text-6xl">
-              {hero?.title ?? "Level Up Your Roblox Experience"}
+              {hero?.title ?? "Level Up Pengalaman Roblox Kamu"}
             </h1>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">
               {hero?.subtitle ??
-                "Instant delivery, unbeatable prices, trusted by thousands of gamers."}
+                "Pengiriman instan, harga terbaik, dipercaya ribuan gamer."}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="hero">
                 <Link to="/shop">
-                  {hero?.cta ?? "Shop Now"} <ArrowRight className="h-4 w-4" />
+                  {hero?.cta ?? "Belanja Sekarang"} <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/track">Track Order</Link>
+                <Link to="/track">Lacak Pesanan</Link>
               </Button>
             </div>
           </div>
@@ -84,9 +84,9 @@ function Index() {
       {categories && categories.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
           <div className="mb-6 flex items-end justify-between">
-            <h2 className="font-display text-2xl font-bold sm:text-3xl">Shop by Category</h2>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl">Belanja per Kategori</h2>
             <Link to="/shop" className="text-sm font-medium text-primary hover:underline">
-              View all
+              Lihat semua
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -113,9 +113,9 @@ function Index() {
       {/* Featured products */}
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-display text-2xl font-bold sm:text-3xl">Featured Deals</h2>
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">Produk Unggulan</h2>
           <Link to="/shop" className="text-sm font-medium text-primary hover:underline">
-            Browse shop
+            Jelajahi toko
           </Link>
         </div>
         {isLoading ? (
@@ -132,7 +132,7 @@ function Index() {
           </div>
         ) : (
           <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
-            No featured products yet. Check back soon!
+            Belum ada produk unggulan. Cek lagi nanti!
           </div>
         )}
       </section>

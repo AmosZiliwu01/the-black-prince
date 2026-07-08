@@ -77,6 +77,78 @@ export type Database = {
         }
         Relationships: []
       }
+      community_groups: {
+        Row: {
+          created_at: string
+          description: string | null
+          game_name: string
+          id: string
+          image_url: string | null
+          is_active: boolean
+          link_url: string
+          member_count: string | null
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          game_name?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          link_url: string
+          member_count?: string | null
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          game_name?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          link_url?: string
+          member_count?: string | null
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer: string
+          category: string
+          created_at: string
+          id: string
+          is_active: boolean
+          question: string
+          sort_order: number
+        }
+        Insert: {
+          answer: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          question: string
+          sort_order?: number
+        }
+        Update: {
+          answer?: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          question?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -137,6 +209,7 @@ export type Database = {
           order_number: string
           payment_method: string | null
           payment_proof_url: string | null
+          proof_submitted_on_web: boolean
           roblox_username: string
           status: Database["public"]["Enums"]["order_status"]
           subtotal: number
@@ -154,6 +227,7 @@ export type Database = {
           order_number: string
           payment_method?: string | null
           payment_proof_url?: string | null
+          proof_submitted_on_web?: boolean
           roblox_username: string
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -171,6 +245,7 @@ export type Database = {
           order_number?: string
           payment_method?: string | null
           payment_proof_url?: string | null
+          proof_submitted_on_web?: boolean
           roblox_username?: string
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -181,50 +256,74 @@ export type Database = {
       }
       products: {
         Row: {
+          badges: string[]
+          category: string | null
           category_id: string | null
-          compare_at_price: number | null
           created_at: string
           delivery_info: string | null
           description: string | null
+          duration: string | null
+          features: string[]
+          game_name: string
           id: string
           image_url: string | null
           is_active: boolean
           is_featured: boolean
           name: string
+          original_price: number | null
           price: number
+          product_type: string
+          rarity: string | null
           slug: string
+          sold_count: number
           stock: number
           updated_at: string
         }
         Insert: {
+          badges?: string[]
+          category?: string | null
           category_id?: string | null
-          compare_at_price?: number | null
           created_at?: string
           delivery_info?: string | null
           description?: string | null
+          duration?: string | null
+          features?: string[]
+          game_name?: string
           id?: string
           image_url?: string | null
           is_active?: boolean
           is_featured?: boolean
           name: string
+          original_price?: number | null
           price?: number
+          product_type?: string
+          rarity?: string | null
           slug: string
+          sold_count?: number
           stock?: number
           updated_at?: string
         }
         Update: {
+          badges?: string[]
+          category?: string | null
           category_id?: string | null
-          compare_at_price?: number | null
           created_at?: string
           delivery_info?: string | null
           description?: string | null
+          duration?: string | null
+          features?: string[]
+          game_name?: string
           id?: string
           image_url?: string | null
           is_active?: boolean
           is_featured?: boolean
           name?: string
+          original_price?: number | null
           price?: number
+          product_type?: string
+          rarity?: string | null
           slug?: string
+          sold_count?: number
           stock?: number
           updated_at?: string
         }
@@ -280,6 +379,39 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: Json
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          created_at: string
+          customer_name: string
+          id: string
+          image_url: string | null
+          is_active: boolean
+          message: string
+          rating: number
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          message: string
+          rating?: number
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          message?: string
+          rating?: number
+          sort_order?: number
         }
         Relationships: []
       }

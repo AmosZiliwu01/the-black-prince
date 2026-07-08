@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/context/auth";
-import { ensureAdmin } from "@/lib/admin-setup.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,11 +20,6 @@ function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
-
-  // Bootstrap the single admin account if it doesn't exist yet.
-  useEffect(() => {
-    ensureAdmin().catch(() => {});
-  }, []);
 
   useEffect(() => {
     if (!loading && session && isAdmin) {
